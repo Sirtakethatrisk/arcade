@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>frogie's arcade v5</title>
+
+<link rel="icon" href="">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: black;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* Animated stars */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(white 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.1;
+    animation: moveStars 60s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveStars {
+    from {transform: translate(0,0);}
+    to {transform: translate(-500px,-500px);}
+}
+
+h1 {
+    margin-top: 120px;
+    font-weight: 400;
+    font-size: 38px;
+}
+
+.apps {
+    margin-top: 30px;
+}
+
+.apps img {
+    width: 65px;
+    margin: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.apps img:hover {
+    transform: scale(1.15);
+}
+
+/* Search */
+.search-box {
+    margin-top: 25px;
+}
+
+.search-box input {
+    width: 320px;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    background: #111;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 12px;
+    background: rgba(20,20,20,0.8);
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+/* Settings Panel */
+#settingsPanel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a;
+    padding-top: 100px;
+    z-index: 999;
+}
+
+.settings-box {
+    margin: 20px auto;
+}
+
+.settings-box input,
+.settings-box select {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin: 5px;
+    background: #111;
+    color: white;
+}
+
+.settings-box button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #1f1f1f;
+    color: white;
+    cursor: pointer;
+}
+
+.settings-box button:hover {
+    background: #333;
+}
+
+.settings-toggle {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>frogie's arcade v5</h1>
+
+<div class="apps">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
+         onclick="go('https://www.youtube.com')">
+
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"
+         onclick="go('https://www.tiktok.com')">
+
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111668.png"
+         onclick="go('https://www.twitch.tv')">
+
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png"
+         onclick="go('https://chat.openai.com')">
+
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+         onclick="go('https://discord.com')">
+</div>
+
+<div class="search-box">
+    <input type="text" placeholder="search anything..."
+    onkeypress="if(event.key==='Enter'){search(this.value)}">
+</div>
+
+<div class="footer">
+    <div>online users: 4120</div>
+    <div>⚙</div>
+</div>
+
+<div class="settings-toggle" onclick="openSettings()">⚙</div>
+
+<div id="settingsPanel">
+    <h2>Settings</h2>
+
+    <div class="settings-box">
+        <input id="tabTitleInput" placeholder="New Tab Title">
+        <button onclick="setTabTitle()">Set Title</button>
+    </div>
+
+    <div class="settings-box">
+        <input id="faviconInput" placeholder="Favicon URL">
+        <button onclick="setFavicon()">Set Favicon</button>
+    </div>
+
+    <div class="settings-box">
+        <select onchange="changeBackground(this.value)">
+            <option value="stars">Stars</option>
+            <option value="gradient">Gradient</option>
+            <option value="dark">Dark</option>
+        </select>
+    </div>
+
+    <div class="settings-box">
+        <button onclick="closeSettings()">Close</button>
+    </div>
+</div>
+
+<script>
+function go(url) {
+    window.location.href = url;
+}
+
+function search(query) {
+    window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
+}
+
+function openSettings() {
+    document.getElementById("settingsPanel").style.display = "block";
+}
+
+function closeSettings() {
+    document.getElementById("settingsPanel").style.display = "none";
+}
+
+function setTabTitle() {
+    let title = document.getElementById("tabTitleInput").value;
+    if(title){
+        document.title = title;
+        localStorage.setItem("tabTitle", title);
+    }
+}
+
+function setFavicon() {
+    let url = document.getElementById("faviconInput").value;
+    if(url){
+        let link = document.querySelector("link[rel*='icon']");
+        link.href = url;
+        localStorage.setItem("favicon", url);
+    }
+}
+
+function changeBackground(type) {
+    if(type === "gradient"){
+        document.body.style.background = "linear-gradient(45deg, #0f0c29, #302b63, #24243e)";
+        document.body.style.setProperty('--stars', 'none');
+    } else if(type === "dark"){
+        document.body.style.background = "#000";
+    } else {
+        document.body.style.background = "black";
+    }
+    localStorage.setItem("bg", type);
+}
+
+window.onload = function(){
+    if(localStorage.getItem("tabTitle")){
+        document.title = localStorage.getItem("tabTitle");
+    }
+
+    if(localStorage.getItem("favicon")){
+        document.querySelector("link[rel*='icon']").href = localStorage.getItem("favicon");
+    }
+
+    if(localStorage.getItem("bg")){
+        changeBackground(localStorage.getItem("bg"));
+    }
+}
+</script>
+
+</body>
+</html>
