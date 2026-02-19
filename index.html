@@ -2,150 +2,108 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>frogie's arcade v6</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<title>frogie's arcade v8</title>
 <style>
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
   background: black;
+  font-family: Arial, sans-serif;
   color: white;
   overflow: hidden;
 }
 
-/* Animated star background */
-.stars {
-  position: fixed;
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow:
-    100px 200px white,
-    300px 400px white,
-    500px 100px white,
-    700px 800px white,
-    900px 300px white,
-    1200px 600px white,
-    1500px 200px white,
-    1700px 700px white,
-    200px 900px white,
-    600px 1200px white;
-  animation: moveStars 60s linear infinite;
-}
-
-@keyframes moveStars {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2000px); }
-}
-
-.container {
+/* Home Screen */
+.home {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 2;
 }
 
-h1 {
-  font-size: 42px;
-  margin-bottom: 30px;
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #222;
+  color: white;
+  cursor: pointer;
 }
 
-.icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 25px;
+button:hover {
+  background: #444;
 }
 
-.icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 15px;
-  background: #1a1a1a;
+/* Browser View */
+.browser {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+
+.topbar {
+  height: 40px;
+  background: #111;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  cursor: pointer;
-  transition: 0.3s;
+  padding: 0 10px;
+  gap: 10px;
 }
 
-.icon:hover {
-  transform: scale(1.15);
-  background: #333;
-}
-
-.search {
-  margin-top: 15px;
-}
-
-input {
-  padding: 12px 20px;
-  width: 320px;
-  border-radius: 25px;
-  border: none;
-  background: #111;
-  color: white;
-  text-align: center;
-  font-size: 15px;
-  outline: none;
-}
-
-.footer {
-  position: absolute;
-  bottom: 20px;
+iframe {
   width: 100%;
-  text-align: center;
-  font-size: 13px;
-  opacity: 0.6;
+  height: calc(100% - 40px);
+  border: none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
+<div class="home" id="home">
+  <h1>frogie's arcade v8</h1>
 
-<div class="container">
-  <h1>frogie’s arcade v6</h1>
+  <button onclick="openSite('https://example.com')">Example (Allowed)</button>
+  <button onclick="openSite('https://openai.com')">OpenAI</button>
 
-  <div class="icons">
-    <div class="icon" onclick="openSite('https://www.google.com')">🔍</div>
-    <div class="icon" onclick="openSite('https://www.youtube.com')">▶</div>
-    <div class="icon" onclick="openSite('https://www.twitch.tv')">🎮</div>
-    <div class="icon" onclick="openSite('https://discord.com')">💬</div>
-    <div class="icon" onclick="openSite('https://www.reddit.com')">👽</div>
-  </div>
+  <br><br>
 
-  <div class="search">
-    <input 
-      type="text" 
-      placeholder="search anything..." 
-      onkeydown="if(event.key==='Enter') search(this.value)"
-    >
-  </div>
+  <input 
+    type="text" 
+    placeholder="Enter URL"
+    id="search"
+    onkeydown="if(event.key==='Enter') openSite(this.value)"
+  >
 </div>
 
-<div class="footer">
-  online users: <span id="users"></span>
+<div class="browser" id="browser">
+  <div class="topbar">
+    <button onclick="goHome()">Home</button>
+  </div>
+  <iframe id="viewer"></iframe>
 </div>
 
 <script>
 function openSite(url) {
-  window.open(url, "_blank");
+  if (!url.startsWith("http")) {
+    url = "https://" + url;
+  }
+
+  document.getElementById("home").style.display = "none";
+  document.getElementById("browser").style.display = "block";
+  document.getElementById("viewer").src = url;
 }
 
-function search(query) {
-  if (!query) return;
-  window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
+function goHome() {
+  document.getElementById("browser").style.display = "none";
+  document.getElementById("home").style.display = "block";
+  document.getElementById("viewer").src = "";
 }
-
-/* fake live user counter */
-document.getElementById("users").innerText = 
-  Math.floor(Math.random() * 2000 + 1000);
 </script>
 
 </body>
