@@ -2,254 +2,150 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>frogie's arcade v5</title>
-
-<link rel="icon" href="">
+<title>frogie's arcade v6</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: black;
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: black;
+  color: white;
+  overflow: hidden;
 }
 
-/* Animated stars */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(white 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.1;
-    animation: moveStars 60s linear infinite;
-    z-index: -1;
+/* Animated star background */
+.stars {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow:
+    100px 200px white,
+    300px 400px white,
+    500px 100px white,
+    700px 800px white,
+    900px 300px white,
+    1200px 600px white,
+    1500px 200px white,
+    1700px 700px white,
+    200px 900px white,
+    600px 1200px white;
+  animation: moveStars 60s linear infinite;
 }
 
 @keyframes moveStars {
-    from {transform: translate(0,0);}
-    to {transform: translate(-500px,-500px);}
+  from { transform: translateY(0); }
+  to { transform: translateY(-2000px); }
+}
+
+.container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
 }
 
 h1 {
-    margin-top: 120px;
-    font-weight: 400;
-    font-size: 38px;
+  font-size: 42px;
+  margin-bottom: 30px;
 }
 
-.apps {
-    margin-top: 30px;
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-.apps img {
-    width: 65px;
-    margin: 10px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: 0.3s;
+.icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.apps img:hover {
-    transform: scale(1.15);
+.icon:hover {
+  transform: scale(1.15);
+  background: #333;
 }
 
-/* Search */
-.search-box {
-    margin-top: 25px;
+.search {
+  margin-top: 15px;
 }
 
-.search-box input {
-    width: 320px;
-    padding: 12px;
-    border-radius: 25px;
-    border: none;
-    background: #111;
-    color: white;
-    text-align: center;
-    font-size: 14px;
+input {
+  padding: 12px 20px;
+  width: 320px;
+  border-radius: 25px;
+  border: none;
+  background: #111;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  outline: none;
 }
 
-/* Footer */
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 12px;
-    background: rgba(20,20,20,0.8);
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-}
-
-/* Settings Panel */
-#settingsPanel {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #0a0a0a;
-    padding-top: 100px;
-    z-index: 999;
-}
-
-.settings-box {
-    margin: 20px auto;
-}
-
-.settings-box input,
-.settings-box select {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    margin: 5px;
-    background: #111;
-    color: white;
-}
-
-.settings-box button {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    background: #1f1f1f;
-    color: white;
-    cursor: pointer;
-}
-
-.settings-box button:hover {
-    background: #333;
-}
-
-.settings-toggle {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 20px;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.6;
 }
 </style>
 </head>
 
 <body>
 
-<h1>frogie's arcade v5</h1>
+<div class="stars"></div>
 
-<div class="apps">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
-         onclick="go('https://www.youtube.com')">
+<div class="container">
+  <h1>frogie’s arcade v6</h1>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"
-         onclick="go('https://www.tiktok.com')">
+  <div class="icons">
+    <div class="icon" onclick="openSite('https://www.google.com')">🔍</div>
+    <div class="icon" onclick="openSite('https://www.youtube.com')">▶</div>
+    <div class="icon" onclick="openSite('https://www.twitch.tv')">🎮</div>
+    <div class="icon" onclick="openSite('https://discord.com')">💬</div>
+    <div class="icon" onclick="openSite('https://www.reddit.com')">👽</div>
+  </div>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111668.png"
-         onclick="go('https://www.twitch.tv')">
-
-    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png"
-         onclick="go('https://chat.openai.com')">
-
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-         onclick="go('https://discord.com')">
-</div>
-
-<div class="search-box">
-    <input type="text" placeholder="search anything..."
-    onkeypress="if(event.key==='Enter'){search(this.value)}">
+  <div class="search">
+    <input 
+      type="text" 
+      placeholder="search anything..." 
+      onkeydown="if(event.key==='Enter') search(this.value)"
+    >
+  </div>
 </div>
 
 <div class="footer">
-    <div>online users: 4120</div>
-    <div>⚙</div>
-</div>
-
-<div class="settings-toggle" onclick="openSettings()">⚙</div>
-
-<div id="settingsPanel">
-    <h2>Settings</h2>
-
-    <div class="settings-box">
-        <input id="tabTitleInput" placeholder="New Tab Title">
-        <button onclick="setTabTitle()">Set Title</button>
-    </div>
-
-    <div class="settings-box">
-        <input id="faviconInput" placeholder="Favicon URL">
-        <button onclick="setFavicon()">Set Favicon</button>
-    </div>
-
-    <div class="settings-box">
-        <select onchange="changeBackground(this.value)">
-            <option value="stars">Stars</option>
-            <option value="gradient">Gradient</option>
-            <option value="dark">Dark</option>
-        </select>
-    </div>
-
-    <div class="settings-box">
-        <button onclick="closeSettings()">Close</button>
-    </div>
+  online users: <span id="users"></span>
 </div>
 
 <script>
-function go(url) {
-    window.location.href = url;
+function openSite(url) {
+  window.open(url, "_blank");
 }
 
 function search(query) {
-    window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
+  if (!query) return;
+  window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
 }
 
-function openSettings() {
-    document.getElementById("settingsPanel").style.display = "block";
-}
-
-function closeSettings() {
-    document.getElementById("settingsPanel").style.display = "none";
-}
-
-function setTabTitle() {
-    let title = document.getElementById("tabTitleInput").value;
-    if(title){
-        document.title = title;
-        localStorage.setItem("tabTitle", title);
-    }
-}
-
-function setFavicon() {
-    let url = document.getElementById("faviconInput").value;
-    if(url){
-        let link = document.querySelector("link[rel*='icon']");
-        link.href = url;
-        localStorage.setItem("favicon", url);
-    }
-}
-
-function changeBackground(type) {
-    if(type === "gradient"){
-        document.body.style.background = "linear-gradient(45deg, #0f0c29, #302b63, #24243e)";
-        document.body.style.setProperty('--stars', 'none');
-    } else if(type === "dark"){
-        document.body.style.background = "#000";
-    } else {
-        document.body.style.background = "black";
-    }
-    localStorage.setItem("bg", type);
-}
-
-window.onload = function(){
-    if(localStorage.getItem("tabTitle")){
-        document.title = localStorage.getItem("tabTitle");
-    }
-
-    if(localStorage.getItem("favicon")){
-        document.querySelector("link[rel*='icon']").href = localStorage.getItem("favicon");
-    }
-
-    if(localStorage.getItem("bg")){
-        changeBackground(localStorage.getItem("bg"));
-    }
-}
+/* fake live user counter */
+document.getElementById("users").innerText = 
+  Math.floor(Math.random() * 2000 + 1000);
 </script>
 
 </body>
